@@ -1,0 +1,47 @@
+html {
+    background-color: green !important;
+    font-size: 10px;
+}
+
+.ms-container {
+    display: inline-block;
+    background: #BDBDBD;
+    border-bottom: solid 2px #707070;
+    border-right: solid 2px #707070;
+    border-top: solid 2px #fff;
+    border-left: solid 2px #fff;
+    border-radius: 3px;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.ms-table {
+    border-bottom: solid 2px #fff;
+    border-right: solid 2px #fff;
+    border-top: solid 2px #7b7b7b;
+    border-left: solid 2px #7b7b7b;
+    border-radius: 2px;
+}
+
+.ms-board {
+    border-bottom: solid 2px #fff;
+    border-right: solid 2px #fff;
+    border-top: solid 2px #7b7b7b;
+    border-left: solid 2px #7b7b7b;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    height: 50px;
+}
+
+.ms-cell {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.closed {
+    border-bottom: solid 2px #7b7b7b;
+    border-right: solid 2px #7b7b7b;
+    border-top: solid 2px #fff;
+    border-left: solid 2px #fff;
+}
