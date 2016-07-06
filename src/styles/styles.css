@@ -1,6 +1,5 @@
 html {
     background-color: green !important;
-    font-size: 10px;
 }
 
 .ms-container {
@@ -21,6 +20,7 @@ html {
     border-top: solid 2px #7b7b7b;
     border-left: solid 2px #7b7b7b;
     border-radius: 2px;
+    display: table;
 }
 
 .ms-board {
@@ -34,9 +34,17 @@ html {
 }
 
 .ms-cell {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
+    width: 24px;
+    height: 24px;
+    display: table-cell;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.ms-row {
 }
 
 .closed {
@@ -44,4 +52,11 @@ html {
     border-right: solid 2px #7b7b7b;
     border-top: solid 2px #fff;
     border-left: solid 2px #fff;
+}
+
+.open {
+    border-left: solid 1px #7b7b7b;
+    border-top: solid 1px #7b7b7b;
+    border-bottom: 0;
+    border-right: 0;
 }
