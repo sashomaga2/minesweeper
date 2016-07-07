@@ -30,14 +30,14 @@ function findBoxCoordinates(state, boxId) {
 }
 
 function handleOpenAction(state, boxId) {
-    let cords = findBoxCoordinates(state, boxId),
-        box = state[cords.x][cords.y],
+    let coords = findBoxCoordinates(state, boxId),
+        box = state[coords.x][coords.y],
         updatedBox, updatedRow;
 
     if(!box.open) {
         updatedBox = update(box, {open: {$set: true}});
-        updatedRow = update(state[cords.x], { $splice: [[cords.y, 1, updatedBox]] });
-        state = update(state, { $splice: [[cords.x, 1, updatedRow]] });
+        updatedRow = update(state[coords.x], { $splice: [[coords.y, 1, updatedBox]] });
+        state = update(state, { $splice: [[coords.x, 1, updatedRow]] });
     }
 
     return state;

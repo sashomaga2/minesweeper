@@ -17,6 +17,7 @@ class Table extends React.Component {
     }
 
     handleChildRightClick(e, id) {
+        // TODO uncomment in order mark to work
         e.preventDefault();
         this.props.dispatch(markAction(id));
     }

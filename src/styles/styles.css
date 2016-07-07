@@ -34,14 +34,17 @@ html {
 }
 
 .ms-cell {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     display: table-cell;
     box-sizing: border-box;
     font-size: 16px;
     line-height: 16px;
     vertical-align: middle;
     text-align: center;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Arial Black','Arial',sans-serif;
 }
 
 .ms-row {
@@ -60,3 +63,19 @@ html {
     border-bottom: 0;
     border-right: 0;
 }
+
+.mine {
+    background-repeat: no-repeat;
+    background-color: #bdbdbd;
+    background-image: url('minesprite.png');
+    background-position: -19px 0;
+}
+
+.m1 { color: #0001FE; }
+.m2 { color: #008000; }
+.m3 { color: #FE0000; }
+.m4 { color: #00007F; }
+.m5 { color: #800000; }
+.m6 { color: #007F7E; }
+.m7 { color: #000000; }
+.m8 { color: #808080; }
