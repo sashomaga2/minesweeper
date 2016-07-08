@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import reducers from './reducers';
+import { rootReducer } from './reducers';
 
-const rootReducer = combineReducers({
-    reducers //short hand props
-});
+// const rootReducer = combineReducers({
+//     rootReducer //short hand props
+// });
 
 export default rootReducer;

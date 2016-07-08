@@ -1,4 +1,5 @@
 import React from 'react';
+import { MARK } from './../../reducers/reducers';
 
 class Cell extends React.Component {
 
@@ -13,8 +14,14 @@ class Cell extends React.Component {
             } else if(score !== 0) {
                 className += ' m' + score;
             }
-        } else {
+        } else { // CLOSED
             className = 'closed ms-cell';
+            const mark = data.mark;
+            if(mark === MARK.BOMB) {
+                className += ' mark-bomb';
+            } else if(mark === MARK.QUESTION) {
+                className += ' mark-question';
+            }
         }
         return className;
     }
