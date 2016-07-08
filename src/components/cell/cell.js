@@ -1,5 +1,5 @@
 import React from 'react';
-import { MARK } from './../../reducers/reducers';
+import { MARK, BOMB } from './../../reducers/reducers';
 
 class Cell extends React.Component {
 
@@ -7,13 +7,19 @@ class Cell extends React.Component {
         let className;
         let data = this.props.data;
         let score = data.score;
+        
         if(data.open) {
             className = 'open ms-cell';
-            if(score === -1) {
+            if(score === BOMB.BOMB) {
                 className += ' mine';
-            } else if(score !== 0) {
-                className += ' m' + score;
+            } else if(score === BOMB.EXPLOSION) {
+                className += ' mine-explosion';
+            } else if(score === BOMB.WRONG){
+                className += ' mine-wrong';
             }
+            else if(score !== BOMB.EMPTY) {
+                className += ' m' + score;
+            } 
         } else { // CLOSED
             className = 'closed ms-cell';
             const mark = data.mark;

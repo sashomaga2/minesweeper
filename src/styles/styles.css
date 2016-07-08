@@ -66,9 +66,21 @@ html {
 
 .mine {
     background-repeat: no-repeat;
-    background-color: #bdbdbd;
     background-image: url('minesprite.png');
     background-position: -19px 0;
+}
+
+.mine-wrong {
+    background-repeat: no-repeat;
+    background-image: url('minesprite.png');
+    background-position: -38px 0;
+}
+
+.mine-explosion {
+    background-repeat: no-repeat;
+    background-image: url('minesprite.png');
+    background-position: -19px 0;
+    background-color: red !important;
 }
 
 .mark-bomb {
