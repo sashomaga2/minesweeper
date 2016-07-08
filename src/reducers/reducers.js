@@ -114,7 +114,6 @@ function openFreeSpaces(state, coords) {
     return state;
 
     function _openAdjacentBoxes(row, col) {
-        console.log(`row: ${row} col: ${col}`);
         if(visited[row][col]){
             return;
         }
