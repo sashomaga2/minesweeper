@@ -1,4 +1,4 @@
-import { MARK, BOMB, LEVEL } from './../reducers/reducers';
+import { MARK, BOX, LEVEL } from './../reducers/reducers';
 
 export default function createRandomStore (level) {
         let minesCount, rows, cols;
@@ -15,8 +15,8 @@ export default function createRandomStore (level) {
                 break;
             case LEVEL.EXPERT:
                 minesCount = 99;
-                rows = 16;
-                cols = 30;
+                rows = 25;
+                cols = 25;
                 break;
             default:
                 throw new Error('Unknown level!!!');
@@ -63,7 +63,7 @@ function populateMines(map, positions) {
     console.log('populateMines', map);
     const col = map[0].length;
     for(let pos of positions) {
-        map[Math.floor(pos / col)][pos % col] = BOMB.BOMB;
+        map[Math.floor(pos / col)][pos % col] = BOX.BOMB;
     }
 }
 
@@ -83,7 +83,7 @@ export function createEmptyMineMap(rows, cols) {
     for(let i = 0; i < rows; i++) {
         row = [];
         for(let j = 0; j < cols; j++) {
-            row.push(BOMB.EMPTY);
+            row.push(BOX.EMPTY);
         }
         scores.push(row);
     }
@@ -103,7 +103,7 @@ function populateScores(mineMap){
 }
 
 function populateBoxScore(mineMap, row, col) {
-    if(mineMap[row][col] === BOMB.BOMB) {
+    if(mineMap[row][col] === BOX.BOMB) {
         return;
     }
 
@@ -118,7 +118,7 @@ function populateBoxScore(mineMap, row, col) {
             isSameBox = (i === 0 && j === 0);
             inBoundaries = newRow >= 0 && newRow < maxRow && newCol >=0 && newCol < maxCol;
 
-            if(!isSameBox && inBoundaries && mineMap[newRow][newCol] === BOMB.BOMB) {
+            if(!isSameBox && inBoundaries && mineMap[newRow][newCol] === BOX.BOMB) {
                 mineMap[row][col]++;
             }
         }

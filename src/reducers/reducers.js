@@ -9,7 +9,7 @@ export const MARK = {
     EMPTY : 2
 };
 
-export const BOMB = { //TODO rename box
+export const BOX = {
     EMPTY: 0,
     BOMB: -1,
     WRONG: -2,
@@ -19,7 +19,7 @@ export const BOMB = { //TODO rename box
 export const LEVEL = {
     BEGINNER: 0,
     INTERMEDIATE: 1,
-    EXPERT: 2	
+    EXPERT: 2
 };
 
 export function rootReducer(state = [], action) {
@@ -98,13 +98,13 @@ function handleExplosion(state, coords) {
             if(!box.open) {
                 newState = updateBox(newState, { x: row, y: col }, 'open', true);
             }
-            if(box.mark === MARK.BOMB && box.score !== BOMB.BOMB) {
-                newState = updateBox(newState, { x: row, y: col }, 'score', BOMB.WRONG);
+            if(box.mark === MARK.BOMB && box.score !== BOX.BOMB) {
+                newState = updateBox(newState, { x: row, y: col }, 'score', BOX.WRONG);
             }
         }
     }
 
-    newState = updateBox(newState, coords, 'score', BOMB.EXPLOSION);
+    newState = updateBox(newState, coords, 'score', BOX.EXPLOSION);
 
     return newState;
 }
@@ -115,9 +115,9 @@ function handleOpenAction(state, boxId) {
         box = state.data[coords.x][coords.y];
 
     if(!box.open) {
-        if(box.score === BOMB.BOMB) { // BOMB
+        if(box.score === BOX.BOMB) { // BOMB
             state = handleExplosion(state, coords);
-        } else if (box.score === BOMB.EMPTY) { // EMPTY
+        } else if (box.score === BOX.EMPTY) { // EMPTY
             state = openFreeSpaces(state, coords);
 
         }
@@ -158,9 +158,9 @@ function openFreeSpaces(state, coords) {
 
                 if(!isSameBox && inBoundaries) {
                     score = state.data[newRow][newCol].score;
-                    if(score === BOMB.EMPTY && !visited[newRow][newCol]) {
+                    if(score === BOX.EMPTY && !visited[newRow][newCol]) {
                         _openAdjacentBoxes(newRow, newCol);
-                    } else if(score !== BOMB.BOMB) {
+                    } else if(score !== BOX.BOMB) {
                         state = updateBox(state, { x: newRow, y: newCol }, 'open', true);
                     }
                 }
