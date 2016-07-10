@@ -27,7 +27,6 @@ class Table extends React.Component {
     }
 
     render() {
-        console.log('render', this);
         let self = this;
         return (
             <div className="ms-table">
@@ -50,7 +49,7 @@ class Table extends React.Component {
 function mapStateToProps(state, ownProps) {
     console.log('mapStateToProps', state);
     return {
-        data: state //comes from reducer
+        data: state.data //comes from reducer
     };
 }
 

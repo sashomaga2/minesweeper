@@ -4,10 +4,10 @@ import configureStore from './store/configureStore';
 import createRandomStore from './store/storeCreator';
 import {Provider} from 'react-redux';
 import App from './components/App';
+import { LEVEL } from './reducers/reducers';
 
 
-
-const store = configureStore(createRandomStore(10,8,8));
+const store = configureStore(createRandomStore(LEVEL.BEGINNER));
 
 render (
     <Provider store={store}>

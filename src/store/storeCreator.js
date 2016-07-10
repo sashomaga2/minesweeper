@@ -1,6 +1,28 @@
-import { MARK, BOMB } from './../reducers/reducers';
+import { MARK, BOMB, LEVEL } from './../reducers/reducers';
 
-export default function createRandomStore (minesCount, rows, cols) {
+export default function createRandomStore (level) {
+        let minesCount, rows, cols;
+        switch (level) {
+            case LEVEL.BEGINNER:
+                minesCount = 10;
+                rows = 8;
+                cols = 8;
+                break;
+            case LEVEL.INTERMEDIATE:
+                minesCount = 40;
+                rows = 16;
+                cols = 16;
+                break;
+            case LEVEL.EXPERT:
+                minesCount = 99;
+                rows = 16;
+                cols = 30;
+                break;
+            default:
+                throw new Error('Unknown level!!!');
+                break;
+        }
+
         let map = createMinesMap(minesCount, rows, cols);
         let row;
         let data = [];
@@ -12,7 +34,7 @@ export default function createRandomStore (minesCount, rows, cols) {
             data.push(row);
         }
 
-        return data;
+        return { data :data, level : level };
 }
 
 function drawMap(map) {
@@ -38,6 +60,7 @@ function createMinesMap(count, rows, cols) {
 }
 
 function populateMines(map, positions) {
+    console.log('populateMines', map);
     const col = map[0].length;
     for(let pos of positions) {
         map[Math.floor(pos / col)][pos % col] = BOMB.BOMB;

@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { createEmptyMineMap } from './../store/storeCreator';
+import createRandomStore from './../store/storeCreator';
 
 export const MARK = {
     BOMB : 0,
@@ -8,11 +9,17 @@ export const MARK = {
     EMPTY : 2
 };
 
-export const BOMB = {
+export const BOMB = { //TODO rename box
     EMPTY: 0,
     BOMB: -1,
     WRONG: -2,
     EXPLOSION: -3
+};
+
+export const LEVEL = {
+    BEGINNER: 0,
+    INTERMEDIATE: 1,
+    EXPERT: 2	
 };
 
 export function rootReducer(state = [], action) {
@@ -20,13 +27,26 @@ export function rootReducer(state = [], action) {
         case 'OPEN':
             return handleOpenAction(state, action.id);
         case 'MARK':
-            console.log('reducers.mark', action);
             return handleMarkAction(state, action.id);
         // return [...state, Object.assign({}, action.course)] //deep copy
             // create a new array with new value assigned
+        case 'NEW_GAME':
+            return handleNewGameAction(state);
+        case 'CHANGE_LEVEL':
+            return handleChangeLevelAction(state, action.level);
         default:
             return state;
     }
+}
+
+function handleChangeLevelAction(state, level) {
+    return handleNewGameAction(Object.assign({}, state, {level: level}));
+}
+
+function handleNewGameAction(state) {
+    console.log('handleNewGame', state.level);
+    let newState = createRandomStore(state.level);
+    return newState;
 }
 
 function findBoxCoordinates(state, boxId) {
@@ -43,8 +63,9 @@ function findBoxCoordinates(state, boxId) {
 }
 
 function handleMarkAction(state, boxId) {
-    let coords = findBoxCoordinates(state, boxId),
-        box = state[coords.x][coords.y];
+    let data = state.data,
+        coords = findBoxCoordinates(data, boxId),
+        box = data[coords.x][coords.y];
 
     if(!box.open) {
         let oldMark = box.mark;
@@ -58,21 +79,22 @@ function handleMarkAction(state, boxId) {
 }
 
 function updateBox(state, coords, prop, value) {
-    let updatedBox, updatedRow, box = state[coords.x][coords.y];
+    let updatedBox, data = state.data, updatedRow, box = data[coords.x][coords.y];
 
     updatedBox = update(box, {[prop]: {$set: value}});
-    console.log('updatedBox', updatedBox);
-    updatedRow = update(state[coords.x], { $splice: [[coords.y, 1, updatedBox]] });
-    return update(state, { $splice: [[coords.x, 1, updatedRow]] });
+    updatedRow = update(data[coords.x], { $splice: [[coords.y, 1, updatedBox]] });
+    let newData = update(data, { $splice: [[coords.x, 1, updatedRow]] });
+    return Object.assign({}, state, { data: newData });
 }
 
 function handleExplosion(state, coords) {
+    let data = state.data;
     let newState = updateBox(state, coords, 'open', true),
         box;
 
-    for(let row = 0; row < state.length; row++){
-        for(let col= 0; col < state[0].length; col++){
-            box = newState[row][col];
+    for(let row = 0; row < data.length; row++){
+        for(let col= 0; col < data[0].length; col++){
+            box = newState.data[row][col];
             if(!box.open) {
                 newState = updateBox(newState, { x: row, y: col }, 'open', true);
             }
@@ -88,8 +110,9 @@ function handleExplosion(state, coords) {
 }
 
 function handleOpenAction(state, boxId) {
-    let coords = findBoxCoordinates(state, boxId),
-        box = state[coords.x][coords.y];
+    console.log('open', state);
+    let coords = findBoxCoordinates(state.data, boxId),
+        box = state.data[coords.x][coords.y];
 
     if(!box.open) {
         if(box.score === BOMB.BOMB) { // BOMB
@@ -105,8 +128,8 @@ function handleOpenAction(state, boxId) {
 }
 
 function openFreeSpaces(state, coords) {
-    let maxRow = state.length,
-        maxCol = state[0].length,
+    let maxRow = state.data.length,
+        maxCol = state.data[0].length,
         visited = createEmptyMineMap(maxRow, maxCol);
 
     _openAdjacentBoxes(coords.x, coords.y);
@@ -118,7 +141,7 @@ function openFreeSpaces(state, coords) {
             return;
         }
 
-        if(!state[row][col].open) {
+        if(!state.data[row][col].open) {
             state = updateBox(state, { x: row, y: col }, 'open', true);
         }
 
@@ -134,7 +157,7 @@ function openFreeSpaces(state, coords) {
                 inBoundaries = newRow >= 0 && newRow < maxRow && newCol >=0 && newCol < maxCol;
 
                 if(!isSameBox && inBoundaries) {
-                    score = state[newRow][newCol].score;
+                    score = state.data[newRow][newCol].score;
                     if(score === BOMB.EMPTY && !visited[newRow][newCol]) {
                         _openAdjacentBoxes(newRow, newCol);
                     } else if(score !== BOMB.BOMB) {
