@@ -23,27 +23,7 @@ class Board extends React.Component {
     render() {
         return (
             <div className="ms-board">
-                <div><button onClick={this.handleNewGame}>new game</button></div>
-                <div>
-                    <div>		
-                        <input type="radio" name="beginner" 
-                                   value={LEVEL.BEGINNER} 
-                                   checked={this.props.data.level === LEVEL.BEGINNER} 
-                                   onChange={this.handleGameLevelChange} />{'Beginner'}
-                    </div>
-                    <div>               
-                        <input type="radio" name="intermediate" 
-                                   value={LEVEL.INTERMEDIATE}  
-                                   checked={this.props.data.level === LEVEL.INTERMEDIATE} 
-                                   onChange={this.handleGameLevelChange} />{'Intermediate'}
-                    </div>
-                    <div>               
-                        <input type="radio" name="expert" 
-                                    value={LEVEL.EXPERT}  
-                                    checked={this.props.data.level === LEVEL.EXPERT} 
-                                    onChange={this.handleGameLevelChange} />{'Expert'}
-                    </div> 
-                </div>
+                <div className="start-btn" onClick={this.handleNewGame}></div>
             </div>
         )
     }

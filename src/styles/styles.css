@@ -50,48 +50,59 @@ html {
 .ms-row {
 }
 
-.closed {
+.box-closed {
     border-bottom: solid 2px #7b7b7b;
     border-right: solid 2px #7b7b7b;
     border-top: solid 2px #fff;
     border-left: solid 2px #fff;
 }
 
-.open {
+.box-open {
     border-left: solid 1px #7b7b7b;
     border-top: solid 1px #7b7b7b;
     border-bottom: 0;
     border-right: 0;
 }
 
+.start-btn {
+    width: 29px;
+    height: 29px;
+    background-repeat: no-repeat;
+    background-image: url('./../images/images.png');
+    background-size: 65px 65px;
+    background-position: -2px -2px;
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
 .mine {
     background-repeat: no-repeat;
-    background-image: url('minesprite.png');
+    background-image: url('./../images/minesprite.png');
     background-position: -19px 0;
 }
 
 .mine-wrong {
     background-repeat: no-repeat;
-    background-image: url('minesprite.png');
+    background-image: url('./../images/minesprite.png');
     background-position: -38px 0;
 }
 
 .mine-explosion {
     background-repeat: no-repeat;
-    background-image: url('minesprite.png');
+    background-image: url('./../images/minesprite.png');
     background-position: -19px 0;
     background-color: red !important;
 }
 
 .mark-bomb {
     background-repeat: no-repeat;
-    background-image: url('minesprite.png');
+    background-image: url('./../images/minesprite.png');
     background-position: -59px 0;
 }
 
 .mark-question {
     background-repeat: no-repeat;
-    background-image: url('minesprite.png');
+    background-image: url('./../images/minesprite.png');
     background-position: -78px 0;
 }
 

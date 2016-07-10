@@ -9,7 +9,7 @@ class Cell extends React.Component {
         let score = data.score;
 
         if(data.open) {
-            className = 'open ms-cell';
+            className = 'box-open ms-cell';
             if(score === BOX.BOMB) {
                 className += ' mine';
             } else if(score === BOX.EXPLOSION) {
@@ -21,7 +21,7 @@ class Cell extends React.Component {
                 className += ' m' + score;
             }
         } else { // CLOSED
-            className = 'closed ms-cell';
+            className = 'box-closed ms-cell';
             const mark = data.mark;
             if(mark === MARK.BOMB) {
                 className += ' mark-bomb';
@@ -34,7 +34,7 @@ class Cell extends React.Component {
     render() {
         //console.log('cell render', this.props);
         return (
-            //<div className={this.props.data.open ? 'open ms-cell mine' : 'closed ms-cell'} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>{this.props.data.id}</div>
+            //<div className={this.props.data.open ? 'box-open ms-cell mine' : 'box-closed ms-cell'} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>{this.props.data.id}</div>
             <div className={this.getClassName()} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>
                 {this.props.data.open ? this.props.data.score !== -1 && this.props.data.score !== 0  ? this.props.data.score : '' : ''}
             </div>

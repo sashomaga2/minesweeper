@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import Table from './table/table';
 import Board from './board/board';
+import Menu from './menu/menu';
 import './../styles/styles.css';
 //import './../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,9 +20,12 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="ms-container">
-                <Board />
-                <Table /> 
+            <div>
+                <Menu />
+                <div className="ms-container">
+                    <Board />
+                    <Table /> 
+                </div>
             </div>
         );
     }
