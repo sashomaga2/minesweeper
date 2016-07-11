@@ -1,4 +1,4 @@
-import { MARK, BOX, LEVEL } from './../reducers/reducers';
+import { MARK, BOX, LEVEL, GAME } from './../reducers/reducers';
 
 export default function createRandomStore (level) {
         let minesCount, rows, cols;
@@ -34,7 +34,7 @@ export default function createRandomStore (level) {
             data.push(row);
         }
 
-        return { data :data, level : level };
+        return { data :data, level : level, minesLeft: minesCount, game: GAME.STARTED, openBoxes: 0, totalWithoutMines: rows * cols - minesCount, time: '' };
 }
 
 function drawMap(map) {

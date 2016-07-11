@@ -22,14 +22,20 @@ export const LEVEL = {
     EXPERT: 2
 };
 
+export const GAME = {
+    STARTED: 0,
+    LOST: 1,
+    WIN: 2
+};
+
+let timer_id;
+
 export function rootReducer(state = [], action) {
     switch(action.type) {
         case 'OPEN':
             return handleOpenAction(state, action.id);
         case 'MARK':
             return handleMarkAction(state, action.id);
-        // return [...state, Object.assign({}, action.course)] //deep copy
-            // create a new array with new value assigned
         case 'NEW_GAME':
             return handleNewGameAction(state);
         case 'CHANGE_LEVEL':
@@ -44,9 +50,7 @@ function handleChangeLevelAction(state, level) {
 }
 
 function handleNewGameAction(state) {
-    console.log('handleNewGame', state.level);
-    let newState = createRandomStore(state.level);
-    return newState;
+    return createRandomStore(state.level);
 }
 
 function findBoxCoordinates(state, boxId) {
@@ -67,10 +71,16 @@ function handleMarkAction(state, boxId) {
         coords = findBoxCoordinates(data, boxId),
         box = data[coords.x][coords.y];
 
-    if(!box.open) {
+    if(!box.open && state.game === GAME.STARTED) {
         let oldMark = box.mark;
         // set next state by order
         let newMark = ++oldMark % Object.keys(MARK).length;
+
+        if(newMark === MARK.BOMB) {
+            state = Object.assign({}, state, {minesLeft: state.minesLeft - 1});
+        } else if(newMark === MARK.QUESTION) {
+            state = Object.assign({}, state, {minesLeft: state.minesLeft + 1});
+        }
 
         return updateBox(state, coords, 'mark', newMark);
     }
@@ -92,6 +102,8 @@ function handleExplosion(state, coords) {
     let newState = updateBox(state, coords, 'open', true),
         box;
 
+    newState = Object.assign({}, newState, { game: GAME.LOST });
+
     for(let row = 0; row < data.length; row++){
         for(let col= 0; col < data[0].length; col++){
             box = newState.data[row][col];
@@ -110,16 +122,23 @@ function handleExplosion(state, coords) {
 }
 
 function handleOpenAction(state, boxId) {
-    console.log('open', state);
     let coords = findBoxCoordinates(state.data, boxId),
         box = state.data[coords.x][coords.y];
 
-    if(!box.open) {
+    if(!box.open && box.mark !== MARK.BOMB && state.game === GAME.STARTED) {
         if(box.score === BOX.BOMB) { // BOMB
             state = handleExplosion(state, coords);
         } else if (box.score === BOX.EMPTY) { // EMPTY
             state = openFreeSpaces(state, coords);
 
+        } else {
+            state = Object.assign({}, state, { openBoxes: state.openBoxes + 1 });
+        }
+
+        //console.log(`openBoxes: ${state.openBoxes} total: ${state.totalWithoutMines}`);
+
+        if(state.openBoxes === state.totalWithoutMines) {
+            state = Object.assign({}, state, { game: GAME.WIN });
         }
         return updateBox(state, coords, 'open', true);
     }
@@ -141,7 +160,10 @@ function openFreeSpaces(state, coords) {
             return;
         }
 
-        if(!state.data[row][col].open) {
+        let box = state.data[row][col];
+
+        if(!box.open && box.mark !== MARK.BOMB) {
+            state = Object.assign({}, state, { openBoxes: state.openBoxes + 1 });
             state = updateBox(state, { x: row, y: col }, 'open', true);
         }
 
@@ -157,10 +179,12 @@ function openFreeSpaces(state, coords) {
                 inBoundaries = newRow >= 0 && newRow < maxRow && newCol >=0 && newCol < maxCol;
 
                 if(!isSameBox && inBoundaries) {
-                    score = state.data[newRow][newCol].score;
+                    box = state.data[newRow][newCol];
+                    score = box.score;
                     if(score === BOX.EMPTY && !visited[newRow][newCol]) {
                         _openAdjacentBoxes(newRow, newCol);
-                    } else if(score !== BOX.BOMB) {
+                    } else if(score !== BOX.BOMB && box.mark !== MARK.BOMB && !box.open) {
+                        state = Object.assign({}, state, { openBoxes: state.openBoxes + 1 });
                         state = updateBox(state, { x: newRow, y: newCol }, 'open', true);
                     }
                 }

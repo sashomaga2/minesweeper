@@ -47,7 +47,6 @@ class Table extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('mapStateToProps', state);
     return {
         data: state.data //comes from reducer
     };

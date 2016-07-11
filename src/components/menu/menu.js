@@ -35,7 +35,6 @@ class Menu extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('Board.mapStateToProps', state);
     return {
         data: state //comes from reducer
     };

@@ -30,7 +30,6 @@ html {
     border-left: solid 2px #7b7b7b;
     margin-bottom: 10px;
     border-radius: 2px;
-    height: 100px;
 }
 
 .ms-cell {
@@ -64,15 +63,38 @@ html {
     border-right: 0;
 }
 
-.start-btn {
+.board-start-btn {
     width: 29px;
     height: 29px;
     background-repeat: no-repeat;
     background-image: url('./../images/images.png');
     background-size: 65px 65px;
-    background-position: -2px -2px;
     margin: 10px auto;
     border-radius: 2px;
+}
+
+.game-started {
+    background-position: -2px -2px;
+}
+
+.game-lost {
+    background-position: -32px -32px;
+}
+
+.game-win {
+    background-position: -2px -32px;
+}
+
+.board-mines-left {
+    border: 2px solid red;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .mine {

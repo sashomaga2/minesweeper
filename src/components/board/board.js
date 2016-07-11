@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { newGameAction, changeLevelAction } from './../../actions/actions';
-import { LEVEL } from './../../reducers/reducers';
+import { GAME } from './../../reducers/reducers';
 
 class Board extends React.Component {
     constructor(props, context){
@@ -10,6 +10,23 @@ class Board extends React.Component {
         // need to bind this in ES6 classes!
         this.handleNewGame = this.handleNewGame.bind(this);
         this.handleGameLevelChange = this.handleGameLevelChange.bind(this);
+    }
+
+    getStartButtonClass() {
+        let cls = 'board-start-btn ';
+        switch (this.props.data.game) {
+            case GAME.STARTED:
+                cls += 'game-started';
+                break;
+            case GAME.LOST:
+                cls += 'game-lost';
+                break;
+            case GAME.WIN:
+                cls += 'game-win';
+                break;
+        }
+
+        return cls;
     }
 
     handleNewGame() {
@@ -23,14 +40,14 @@ class Board extends React.Component {
     render() {
         return (
             <div className="ms-board">
-                <div className="start-btn" onClick={this.handleNewGame}></div>
+                <div className="board-mines-left"> {this.props.data.minesLeft} </div>
+                <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
             </div>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('Board.mapStateToProps', state);
     return {
         data: state //comes from reducer
     };
