@@ -2,6 +2,11 @@ html {
     background-color: green !important;
 }
 
+@font-face {
+    font-family: digit;
+    src: url(../fonts/digital-7.ttf);
+}
+
 .ms-container {
     display: inline-block;
     background: #BDBDBD;
@@ -86,15 +91,17 @@ html {
 }
 
 .board-mines-left {
+    font-family: digit;
+    font-size: 25px;
     border: 2px solid red;
     text-align: center;
     color: red;
     font-weight: bold;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 23px;
     float: left;
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 11px;
 }
 
 .mine {
