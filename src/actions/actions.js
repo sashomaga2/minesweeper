@@ -18,4 +18,8 @@ export function changeLevelAction(level) {
     return { type: 'CHANGE_LEVEL', level }; 
 }
 
+export function increaseTimeAction() {
+    return { type: 'INCREASE_TIME' };
+}
+
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { MARK, BOX } from './../../reducers/reducers';
+import { MARK, BOX, findBoxCoordinates } from './../../reducers/reducers';
+import {connect} from 'react-redux';
 
 class Cell extends React.Component {
 
@@ -31,15 +32,24 @@ class Cell extends React.Component {
         }
         return className;
     }
+
     render() {
-        //console.log('cell render', this.props);
+        console.log('%c Cell.render', 'color: green');
         return (
-            //<div className={this.props.data.open ? 'box-open ms-cell mine' : 'box-closed ms-cell'} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>{this.props.data.id}</div>
             <div className={this.getClassName()} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>
-                {this.props.data.open ? this.props.data.score !== -1 && this.props.data.score !== 0  ? this.props.data.score : '' : ''}
+                {this.props.data.open ? this.props.data.score !== BOX.BOMB && this.props.data.score !== BOX.EMPTY  ? this.props.data.score : '' : ''}
             </div>
         )
     }
 }
 
-export default Cell;
+function mapStateToProps(state, ownProps) {
+    // TODO cache not to compute on every update
+    const coords = findBoxCoordinates(state.data, ownProps.data.id);
+
+    return {
+        data: state.data[coords.x][coords.y]
+    };
+}
+
+export default connect(mapStateToProps)(Cell);

@@ -4,10 +4,6 @@ import {connect} from 'react-redux';
 import {openAction, markAction} from './../../actions/actions';
 
 class Table extends React.Component {
-    // onItemClick(id) {
-    //     this.props.dispatch(openAction(id));
-    // }
-
     constructor(props, context){
         super(props, context);
 
@@ -27,6 +23,7 @@ class Table extends React.Component {
     }
 
     render() {
+        console.log('%c Table.render', 'color: brown');
         let self = this;
         return (
             <div className="ms-table">
@@ -48,11 +45,8 @@ class Table extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        data: state.data //comes from reducer
+        data: state.initial
     };
 }
-
-//, mapDispatchToProps
-// this.props.dispatch  fire actions
 
 export default connect(mapStateToProps)(Table);

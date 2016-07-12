@@ -28,8 +28,6 @@ export const GAME = {
     WIN: 2
 };
 
-let timer_id;
-
 export function rootReducer(state = [], action) {
     switch(action.type) {
         case 'OPEN':
@@ -53,7 +51,7 @@ function handleNewGameAction(state) {
     return createRandomStore(state.level);
 }
 
-function findBoxCoordinates(state, boxId) {
+export function findBoxCoordinates(state, boxId) {
     let x, y;
     state.forEach((row, index)=>{
         let box = row.find((item)=>item.id === boxId);

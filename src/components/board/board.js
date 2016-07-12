@@ -6,15 +6,16 @@ import { GAME } from './../../reducers/reducers';
 class Board extends React.Component {
     constructor(props, context){
         super(props, context);
-
+        
         // need to bind this in ES6 classes!
         this.handleNewGame = this.handleNewGame.bind(this);
         this.handleGameLevelChange = this.handleGameLevelChange.bind(this);
+        this.getStartButtonClass = this.getStartButtonClass.bind(this);
     }
 
     getStartButtonClass() {
         let cls = 'board-start-btn ';
-        switch (this.props.data.game) {
+        switch (this.props.game) {
             case GAME.STARTED:
                 cls += 'game-started';
                 break;
@@ -30,7 +31,7 @@ class Board extends React.Component {
     }
 
     handleNewGame() {
-         this.props.dispatch(newGameAction());
+        this.props.dispatch(newGameAction());
     }
 
     handleGameLevelChange(e) {
@@ -38,9 +39,10 @@ class Board extends React.Component {
     }
 
     render() {
+        console.log('%c Board.render', 'color: green');
         return (
             <div className="ms-board">
-                <div className="board-mines-left"> {this.props.data.minesLeft} </div>
+                <div className="board-mines-left"> {this.props.minesLeft} </div>
                 <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
             </div>
         )
@@ -49,11 +51,9 @@ class Board extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        data: state //comes from reducer
+        minesLeft: state.minesLeft,
+        game: state.game
     };
 }
-
-//, mapDispatchToProps
-// this.props.dispatch  fire actions
 
 export default connect(mapStateToProps)(Board);

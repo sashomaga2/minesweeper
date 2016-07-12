@@ -1,3 +1,4 @@
+import update from 'react/lib/update';
 import { MARK, BOX, LEVEL, GAME } from './../reducers/reducers';
 
 export default function createRandomStore (level) {
@@ -18,9 +19,6 @@ export default function createRandomStore (level) {
                 rows = 25;
                 cols = 25;
                 break;
-            default:
-                throw new Error('Unknown level!!!');
-                break;
         }
 
         let map = createMinesMap(minesCount, rows, cols);
@@ -34,7 +32,16 @@ export default function createRandomStore (level) {
             data.push(row);
         }
 
-        return { data :data, level : level, minesLeft: minesCount, game: GAME.STARTED, openBoxes: 0, totalWithoutMines: rows * cols - minesCount, time: '' };
+        return {
+            data :data,
+            level : level,
+            minesLeft: minesCount,
+            game: GAME.STARTED,
+            openBoxes: 0,
+            totalWithoutMines: rows * cols - minesCount,
+            time: 0,
+            initial: update(data, {$merge: []})
+        };
 }
 
 function drawMap(map) {
@@ -54,13 +61,11 @@ function createMinesMap(count, rows, cols) {
     populateMines(map, pos);
     populateScores(map);
 
-    drawMap(map);
-    console.log('map', map);
+    //drawMap(map);
     return map;
 }
 
 function populateMines(map, positions) {
-    console.log('populateMines', map);
     const col = map[0].length;
     for(let pos of positions) {
         map[Math.floor(pos / col)][pos % col] = BOX.BOMB;
