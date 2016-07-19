@@ -3,6 +3,8 @@ import Cell from './../cell/cell';
 import {connect} from 'react-redux';
 import {openAction, markAction} from './../../actions/actions';
 
+const PropTypes = React.PropTypes;
+
 class Table extends React.Component {
     constructor(props, context){
         super(props, context);
@@ -15,11 +17,11 @@ class Table extends React.Component {
     handleChildRightClick(e, id) {
         // TODO uncomment in order mark to work
         e.preventDefault();
-        this.props.dispatch(markAction(id));
+        this.props.mark(id);
     }
 
     handleChildClick(id) {
-        this.props.dispatch(openAction(id));
+        this.props.open(id);
     }
 
     render() {
@@ -43,10 +45,24 @@ class Table extends React.Component {
     }
 }
 
+Table.propTypes = {
+    open: PropTypes.func.isRequired,
+    mark: PropTypes.func.isRequired,
+    data: PropTypes.array.isRequired
+}
+
 function mapStateToProps(state, ownProps) {
     return {
         data: state.initial
     };
 }
 
-export default connect(mapStateToProps)(Table);
+function mapDispatchToProps(dispatch) {
+    return {
+        open: id => dispatch(openAction(id)),
+        mark: id => dispatch(markAction(id))
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
