@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { changeLevelAction } from './../../actions/actions';
 import { LEVEL } from './../../reducers/reducers';
+
+const PropTypes = React.PropTypes;
 
 class Menu extends React.Component {
     constructor(props, context){
@@ -11,7 +14,8 @@ class Menu extends React.Component {
     }
 
     handleGameLevelChange(e) {
-        this.props.dispatch(changeLevelAction(Number(e.target.value)));
+        //this.props.dispatch(changeLevelAction(Number(e.target.value)));
+        this.props.changeLevel(Number(e.target.value));
     }
 
     render() {
@@ -34,13 +38,22 @@ class Menu extends React.Component {
     }
 }
 
+Menu.propTypes = {
+    data: PropTypes.array.isRequired,
+    changeLevel: PropTypes.func.isRequired
+}
+
 function mapStateToProps(state, ownProps) {
     return {
         data: state //comes from reducer
     };
 }
 
-//, mapDispatchToProps
-// this.props.dispatch  fire actions
+function mapDispatchToProps(dispatch) {
+    return {
+        // Could use actions: bindActionCreators(actions, dispatch) when actions is an object
+        changeLevel: bindActionCreators(changeLevelAction, dispatch)
+    }
+}
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
