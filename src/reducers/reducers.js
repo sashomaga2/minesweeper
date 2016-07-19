@@ -2,6 +2,7 @@ import React from 'react';
 import update from 'react/lib/update';
 import { createEmptyMineMap } from './../store/storeCreator';
 import createRandomStore from './../store/storeCreator';
+import * as types from './../actions/actionTypes';
 
 export const MARK = {
     BOMB : 0,
@@ -30,13 +31,13 @@ export const GAME = {
 
 export function rootReducer(state = [], action) {
     switch(action.type) {
-        case 'OPEN':
+        case types.OPEN:
             return handleOpenAction(state, action.id);
-        case 'MARK':
+        case types.MARK:
             return handleMarkAction(state, action.id);
-        case 'NEW_GAME':
+        case types.NEW_GAME:
             return handleNewGameAction(state);
-        case 'CHANGE_LEVEL':
+        case types.CHANGE_LEVEL:
             return handleChangeLevelAction(state, action.level);
         default:
             return state;

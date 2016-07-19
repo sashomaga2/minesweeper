@@ -39,7 +39,7 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
     changeLevel: PropTypes.func.isRequired
 }
 

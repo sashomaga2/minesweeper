@@ -1,25 +1,24 @@
+import * as types from './actionTypes';
+
 export function openAction(id) {
     console.log("actions.openAction");
-    return { type: 'OPEN', id }; // in ES6 omit id: id
+    return { type: types.OPEN, id };
 }
 
 export function markAction(id) {
     console.log("actions.markAction");
-    return { type: 'MARK', id }; // in ES6 omit id: id
+    return { type: types.MARK, id };
 }
 
 export function newGameAction(id) {
     console.log("actions.newGameAction");
-    return { type: 'NEW_GAME' }; 
+    return { type: types.NEW_GAME };
 }
 
 export function changeLevelAction(level) {
     console.log("actions.changeGameLevelAction");
-    return { type: 'CHANGE_LEVEL', level }; 
+    return { type: types.CHANGE_LEVEL, level };
 }
 
-export function increaseTimeAction() {
-    return { type: 'INCREASE_TIME' };
-}
 
 
