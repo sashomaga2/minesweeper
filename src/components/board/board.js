@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { newGameAction, changeLevelAction } from './../../actions/actions';
 import { GAME } from './../../reducers/reducers';
@@ -45,11 +45,18 @@ class Board extends React.Component {
                 <div className="board-mines-left"> {this.props.minesLeft} </div>
                 <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
             </div>
-        )
+        );
     }
 }
 
+Board.propTypes = {
+    minesLeft: PropTypes.number.isRequired,
+    game: PropTypes.number.isRequired,
+    dispatch: PropTypes.func.isRequired
+};
+
 function mapStateToProps(state, ownProps) {
+    console.log('Board', state);
     return {
         minesLeft: state.minesLeft,
         game: state.game

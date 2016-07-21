@@ -1,7 +1,6 @@
 import React from 'react';
 import update from 'react/lib/update';
-import { createEmptyMineMap } from './../store/storeCreator';
-import createRandomStore from './../store/storeCreator';
+import { createEmptyMineMap, createRandomStore } from './../store/storeCreator';
 import * as types from './../actions/actionTypes';
 
 export const MARK = {
@@ -30,6 +29,7 @@ export const GAME = {
 };
 
 export function rootReducer(state = [], action) {
+    console.log('rootReducer', action);
     switch(action.type) {
         case types.OPEN:
             return handleOpenAction(state, action.id);
@@ -39,6 +39,8 @@ export function rootReducer(state = [], action) {
             return handleNewGameAction(state);
         case types.CHANGE_LEVEL:
             return handleChangeLevelAction(state, action.level);
+        case types.LOAD_MINES_SUCCESS:
+            return action.mines;
         default:
             return state;
     }

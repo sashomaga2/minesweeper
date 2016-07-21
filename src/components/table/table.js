@@ -1,9 +1,7 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Cell from './../cell/cell';
 import {connect} from 'react-redux';
 import {openAction, markAction} from './../../actions/actions';
-
-const PropTypes = React.PropTypes;
 
 class Table extends React.Component {
     constructor(props, context){
@@ -29,19 +27,18 @@ class Table extends React.Component {
         let self = this;
         return (
             <div className="ms-table">
-                {this.props.data.map(function(row){
+                {this.props.data.map(function(row, inx){
                     return(
-                        <div className="ms-row">{ row.map(function(cell){
-                            //console.log('cell', cell);
+                        <div key={inx} className="ms-row">{row.map(function(cell){
                             let cellId = cell.id;
                             return (
-                                <Cell key={cellId} onClick={()=>self.handleChildClick(cellId)} onContextMenu={(e)=>self.handleChildRightClick(e, cellId)} data={cell}/>
-                            )
-                        }) } </div>
-                    )
+                                <Cell key={cellId} onClick={function() { return self.handleChildClick(cellId); }} onContextMenu={function(e) { return self.handleChildRightClick(e, cellId);}} data={cell}/>
+                            );
+                        })}</div>
+                    );
                 })}
             </div>
-        )
+        );
     }
 }
 
@@ -49,7 +46,7 @@ Table.propTypes = {
     open: PropTypes.func.isRequired,
     mark: PropTypes.func.isRequired,
     data: PropTypes.array.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {

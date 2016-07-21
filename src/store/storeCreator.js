@@ -1,7 +1,7 @@
 import update from 'react/lib/update';
 import { MARK, BOX, LEVEL, GAME } from './../reducers/reducers';
 
-export default function createRandomStore (level) {
+export function createRandomStore (level) {
         let minesCount, rows, cols;
         switch (level) {
             case LEVEL.BEGINNER:

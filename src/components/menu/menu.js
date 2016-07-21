@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeLevelAction } from './../../actions/actions';
 import { LEVEL } from './../../reducers/reducers';
-
-const PropTypes = React.PropTypes;
 
 class Menu extends React.Component {
     constructor(props, context){
@@ -34,14 +32,14 @@ class Menu extends React.Component {
                                 checked={this.props.data.level === LEVEL.EXPERT} 
                                 onChange={this.handleGameLevelChange} />{'Expert'}
                </div>
-        )
+        );
     }
 }
 
 Menu.propTypes = {
     data: PropTypes.object.isRequired,
     changeLevel: PropTypes.func.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -53,7 +51,7 @@ function mapDispatchToProps(dispatch) {
     return {
         // Could use actions: bindActionCreators(actions, dispatch) when actions is an object
         changeLevel: bindActionCreators(changeLevelAction, dispatch)
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

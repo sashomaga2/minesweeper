@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { MARK, BOX, findBoxCoordinates } from './../../reducers/reducers';
 import {connect} from 'react-redux';
 
@@ -39,9 +39,15 @@ class Cell extends React.Component {
             <div className={this.getClassName()} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>
                 {this.props.data.open ? this.props.data.score !== BOX.BOMB && this.props.data.score !== BOX.EMPTY  ? this.props.data.score : '' : ''}
             </div>
-        )
+        );
     }
 }
+
+Cell.propTypes = {
+    data: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired,
+    onContextMenu: PropTypes.func.isRequired
+};
 
 function mapStateToProps(state, ownProps) {
     // TODO cache not to compute on every update
