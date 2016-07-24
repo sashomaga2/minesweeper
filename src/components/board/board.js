@@ -16,27 +16,30 @@ class Board extends React.Component {
     }
 
     componentDidMount() {
-        this._interval = setInterval(() => (
-            this.setState({time: this.state.time + 1})
-        ), 1000);
+        this.setTimeInterval();
     }
 
     componentWillUnmount() {
         clearInterval(this._interval);
     }
 
+    setTimeInterval() {
+        this._interval = setInterval(() => (
+                this.setState({time: this.state.time + 1})
+        ), 1000); 
+    }
+
     componentWillReceiveProps(props) {
         console.log('componentWillReceiveProps', props);
-        const game = props.game;
 
-        if(game === GAME.LOST || game === GAME.WIN) {
+        if(props.game !== this.props.game) {
             clearInterval(this._interval);
-        } else {
-            this.setState({ time: 0 });
-            this._interval = setInterval(() => (
-                this.setState({time: this.state.time + 1})
-            ), 1000);
-        }
+
+            if(props.game === GAME.STARTED) {
+                this.setState({ time: 0 });
+                this.setTimeInterval();
+            }
+        } 
     }
 
     getStartButtonClass() {
@@ -57,6 +60,7 @@ class Board extends React.Component {
     }
 
     handleNewGame() {
+        this.setState({ time: 0 });
         this.props.dispatch(newGameAction());
     }
 
@@ -70,8 +74,8 @@ class Board extends React.Component {
         return (
             <div className="ms-board">
                 <div className="board-mines-left"> {this.props.minesLeft} </div>
-                <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
                 <div className="board-mines-right"> {this.state.time} </div>
+                <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
             </div>
         );
     }
@@ -84,6 +88,7 @@ Board.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+    console.log('****mapStateToProps');
     return {
         minesLeft: state.minesLeft,
         game: state.game
