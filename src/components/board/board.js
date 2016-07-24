@@ -6,11 +6,37 @@ import { GAME } from './../../reducers/reducers';
 class Board extends React.Component {
     constructor(props, context){
         super(props, context);
+
+        this.state = { time: 0 };
         
         // need to bind this in ES6 classes!
         this.handleNewGame = this.handleNewGame.bind(this);
         this.handleGameLevelChange = this.handleGameLevelChange.bind(this);
         this.getStartButtonClass = this.getStartButtonClass.bind(this);
+    }
+
+    componentDidMount() {
+        this._interval = setInterval(() => (
+            this.setState({time: this.state.time + 1})
+        ), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this._interval);
+    }
+
+    componentWillReceiveProps(props) {
+        console.log('componentWillReceiveProps', props);
+        const game = props.game;
+
+        if(game === GAME.LOST || game === GAME.WIN) {
+            clearInterval(this._interval);
+        } else {
+            this.setState({ time: 0 });
+            this._interval = setInterval(() => (
+                this.setState({time: this.state.time + 1})
+            ), 1000);
+        }
     }
 
     getStartButtonClass() {
@@ -40,10 +66,12 @@ class Board extends React.Component {
 
     render() {
         console.log('%c Board.render', 'color: green');
+        
         return (
             <div className="ms-board">
                 <div className="board-mines-left"> {this.props.minesLeft} </div>
                 <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
+                <div className="board-mines-right"> {this.state.time} </div>
             </div>
         );
     }
@@ -56,7 +84,6 @@ Board.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    console.log('Board', state);
     return {
         minesLeft: state.minesLeft,
         game: state.game

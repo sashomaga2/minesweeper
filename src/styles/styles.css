@@ -104,6 +104,20 @@ html {
     margin-top: 11px;
 }
 
+.board-mines-right{
+    font-family: digit;
+    font-size: 25px;
+    border: 2px solid red;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    width: 25px;
+    height: 23px;
+    float: right;
+    margin-left: 10px;
+    margin-top: 11px;
+}
+
 .mine {
     background-repeat: no-repeat;
     background-image: url('./../images/minesprite.png');
