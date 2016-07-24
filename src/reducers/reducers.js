@@ -23,9 +23,10 @@ export const LEVEL = {
 };
 
 export const GAME = {
-    STARTED: 0,
-    LOST: 1,
-    WIN: 2
+    READY: 0,
+    STARTED: 1,
+    LOST: 2,
+    WIN: 3
 };
 
 export function rootReducer(state = [], action) {
@@ -125,6 +126,10 @@ function handleExplosion(state, coords) {
 function handleOpenAction(state, boxId) {
     let coords = findBoxCoordinates(state.data, boxId),
         box = state.data[coords.x][coords.y];
+
+    if(state.game === GAME.READY) {
+        state = Object.assign({}, state, {game: GAME.STARTED});
+    }
 
     if(!box.open && box.mark !== MARK.BOMB && state.game === GAME.STARTED) {
         if(box.score === BOX.BOMB) { // BOMB

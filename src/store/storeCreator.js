@@ -36,7 +36,7 @@ export function createRandomStore (level) {
             data :data,
             level : level,
             minesLeft: minesCount,
-            game: GAME.STARTED,
+            game: GAME.READY,
             openBoxes: 0,
             totalWithoutMines: rows * cols - minesCount,
             time: 0,

@@ -15,9 +15,9 @@ class Board extends React.Component {
         this.getStartButtonClass = this.getStartButtonClass.bind(this);
     }
 
-    componentDidMount() {
-        this.setTimeInterval();
-    }
+    //componentDidMount() {
+    //    this.setTimeInterval();
+    //}
 
     componentWillUnmount() {
         clearInterval(this._interval);
@@ -30,8 +30,6 @@ class Board extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log('componentWillReceiveProps', props);
-
         if(props.game !== this.props.game) {
             clearInterval(this._interval);
 
@@ -46,6 +44,7 @@ class Board extends React.Component {
         let cls = 'board-start-btn ';
         switch (this.props.game) {
             case GAME.STARTED:
+            case GAME.READY:
                 cls += 'game-started';
                 break;
             case GAME.LOST:
@@ -60,7 +59,6 @@ class Board extends React.Component {
     }
 
     handleNewGame() {
-        this.setState({ time: 0 });
         this.props.dispatch(newGameAction());
     }
 
@@ -70,7 +68,6 @@ class Board extends React.Component {
 
     render() {
         console.log('%c Board.render', 'color: green');
-        
         return (
             <div className="ms-board">
                 <div className="board-mines-left"> {this.props.minesLeft} </div>
