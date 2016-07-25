@@ -25,9 +25,10 @@ class Table extends React.Component {
     render() {
         console.log('%c Table.render', 'color: brown');
         let self = this;
+        const { data } = this.props;
         return (
             <div className="ms-table">
-                {this.props.data.map(function(row, inx){
+                {data.map(function(row, inx){
                     return(
                         <div key={inx} className="ms-row">{row.map(function(cell){
                             let cellId = cell.id;

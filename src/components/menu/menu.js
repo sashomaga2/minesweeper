@@ -17,19 +17,20 @@ class Menu extends React.Component {
     }
 
     render() {
+        const { data } = this.props;
         return (
                 <div>	
                     <input type="radio" name="beginner" 
                                 value={LEVEL.BEGINNER} 
-                                checked={this.props.data.level === LEVEL.BEGINNER} 
+                                checked={data.level === LEVEL.BEGINNER} 
                                 onChange={this.handleGameLevelChange} />{'Beginner'}       
                     <input type="radio" name="intermediate" 
                                 value={LEVEL.INTERMEDIATE}  
-                                checked={this.props.data.level === LEVEL.INTERMEDIATE} 
+                                checked={data.level === LEVEL.INTERMEDIATE} 
                                 onChange={this.handleGameLevelChange} />{'Intermediate'}      
                     <input type="radio" name="expert" 
                                 value={LEVEL.EXPERT}  
-                                checked={this.props.data.level === LEVEL.EXPERT} 
+                                checked={data.level === LEVEL.EXPERT} 
                                 onChange={this.handleGameLevelChange} />{'Expert'}
                </div>
         );

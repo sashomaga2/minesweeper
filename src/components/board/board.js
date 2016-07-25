@@ -68,9 +68,10 @@ class Board extends React.Component {
 
     render() {
         console.log('%c Board.render', 'color: green');
+        const { minesLeft } = this.props;
         return (
             <div className="ms-board">
-                <div className="board-mines-left"> {this.props.minesLeft} </div>
+                <div className="board-mines-left"> {minesLeft} </div>
                 <div className="board-mines-right"> {this.state.time} </div>
                 <div className={this.getStartButtonClass()} onClick={this.handleNewGame}></div>
             </div>

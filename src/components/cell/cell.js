@@ -35,9 +35,10 @@ class Cell extends React.Component {
 
     render() {
         console.log('%c Cell.render', 'color: green');
+        const { data, onClick, onContextMenu } = this.props;
         return (
-            <div className={this.getClassName()} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>
-                {this.props.data.open ? this.props.data.score !== BOX.BOMB && this.props.data.score !== BOX.EMPTY  ? this.props.data.score : '' : ''}
+            <div className={this.getClassName()} onClick={onClick} onContextMenu={onContextMenu}>
+                {data.open ? data.score !== BOX.BOMB && data.score !== BOX.EMPTY  ? data.score : '' : ''}
             </div>
         );
     }
